@@ -1,0 +1,44 @@
+version: '3'
+services:
+  arch:
+    tty: true
+    container_name: architectrure
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - arch-network
+
+  init:
+    container_name: initialization
+    build:
+      context: ./init
+      dockerfile: Dockerfile
+    networks:
+      - arch-network
+
+  db:
+    container_name: postgres_db
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=rootadmin
+      - POSTGRES_PASSWORD=rootadmin123
+      - PGDATA=/data/postgres
+      - POSTGRES_DB=messenger_db
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - arch-network
+
+networks:
+  arch-network:
+    driver: "bridge"
+    external: false

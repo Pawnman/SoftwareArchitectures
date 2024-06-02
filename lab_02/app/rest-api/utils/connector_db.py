@@ -4,7 +4,7 @@ import time
 
 class PostgresConnector:
 
-    def __init__(self, db_name: str = 'postgres') -> None:
+    def __init__(self, db_name: str = 'messenger_users_db') -> None:
         self.db_name = db_name
         self.user = 'rootadmin'
         self.password = 'rootadmin123'
@@ -17,7 +17,7 @@ class PostgresConnector:
                 break
 
             except:
-                print("Can't connect to postgres")
+                print("Can't connect to postgres database")
                 time.sleep(5)
 
     def get_cursor(self) -> psycopg2.extensions.cursor:

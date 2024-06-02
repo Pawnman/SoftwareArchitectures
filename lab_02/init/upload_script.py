@@ -9,10 +9,10 @@ import time
 
 class PostgresConnector:
 
-    def __init__(self, db_name: str = 'postgres') -> None:
+    def __init__(self, db_name: str = 'messenger_users_db') -> None:
         self.db_name = db_name
-        self.user = 'baozorp'
-        self.password = 'baozorp'
+        self.user = 'Ivan312'
+        self.password = 'Ivan312213'
         self.host = 'postgres'
         self.port = '5432'
         while True:

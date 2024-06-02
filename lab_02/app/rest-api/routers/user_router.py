@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from models.user import UpdateUserModel
-from utils.postgres_connector import PostgresConnector
+from utils.connector_db import PostgresConnector
 import psycopg2
 import hashlib
 
