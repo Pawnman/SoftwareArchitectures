@@ -24,3 +24,19 @@
 - Загрузка сообщений группового чата
 - Отправка PtP сообщения пользователю
 - Получение PtP списка сообщений для пользователя
+
+# Архитектура приложения
+
+<p></p>
+<figure>
+   <img src="./lab_01/images/Context.png" width="400"/>
+   <figcaption>Рисунок 1 - Контекстная схема приложения</figcaption>
+  </figure>
+<p></p>
+
+<p></p>
+<figure>
+   <img src="./lab_01/images/Deployment.png" width="400"/>
+   <figcaption>Рисунок 2 - Структура развертки приложения</figcaption>
+  </figure>
+<p></p>
