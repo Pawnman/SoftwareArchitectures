@@ -1,4 +1,5 @@
 import httpx
+from aiocircuitbreaker import circuit
 from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -7,7 +8,7 @@ from database.mongo_db import GroupChat
 from schemas import GroupChatSchema, MessageSchema, UserReadSchema
 from settings import settings
 from utils.utils import convert_group_model_to_dict
-from aiocircuitbreaker import circuit
+
 
 router = APIRouter(
     tags=["group_chat"],

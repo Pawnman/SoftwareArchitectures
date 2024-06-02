@@ -4,8 +4,11 @@ from pydantic import BaseModel, ConfigDict, alias_generators, Field
 from schemas.message import MessageSchema
 from schemas.user import UserReadSchema
 
-# Класс группового чата
+
 class GroupChatSchema(BaseModel):
+    """
+    Создаем схему группового чата
+    """
     model_config = ConfigDict(alias_generator=alias_generators.to_camel, populate_by_name=True,
                               arbitrary_types_allowed=True)
 

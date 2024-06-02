@@ -1,4 +1,4 @@
-### Без кэширования
+### Without cash
 ```
 Running 15s test @ http://127.0.0.1:8000/user/1
   2 threads and 400 connections
@@ -12,7 +12,8 @@ Transfer/sec:    117.30KB
 
 ```
 
-### С кэшированием
+
+### With cache
 ```
 Running 15s test @ http://127.0.0.1:8000/user/1
   2 threads and 400 connections

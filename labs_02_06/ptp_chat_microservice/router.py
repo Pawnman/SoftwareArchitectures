@@ -17,9 +17,10 @@ router = APIRouter(
 @circuit(failure_threshold=5, recovery_timeout=30)
 async def send_message(message_text: str, user_getter_id: int, username: str = Depends(get_current_auth_user),
                        token: str = Depends(oauth2_scheme)):
+    """
+    Получаем на вход сообщение и отправляем его пользователю, сохраняем в базе данных и возвращаем сообщение
 
-    # Получение сообщения и его отправка, а также последующее сохранение в БД с возвратом
-
+    """
     try:
 
         async with httpx.AsyncClient() as client:
@@ -67,8 +68,9 @@ async def send_message(message_text: str, user_getter_id: int, username: str = D
 @router.get('/get_messages', response_model=list[PtpChatSchema])
 @circuit(failure_threshold=5, recovery_timeout=30)
 async def get_messages(username: str = Depends(get_current_auth_user), token: str = Depends(oauth2_scheme)):
-    
-    # Все сообщения пользователя
+    """
+    Получаем все сообщения пользователя
+    """
 
     try:
         async with httpx.AsyncClient() as client:

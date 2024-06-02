@@ -7,12 +7,12 @@ DATABASE_URL = (f"postgresql+asyncpg://{settings.POSTGRES_USER}:{settings.POSTGR
                 f"{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}")
 
 Base = declarative_base()
-# Создание для работы с БД Postgres
+# Создание движка и сессии для работы с БД Postgres, используем асинхронный режим работы с БД
 engine = create_async_engine(DATABASE_URL)
 async_session = async_sessionmaker(engine)
 
 
-# Функция для получения сессии для работы с Postgres
+# Функция для получения сессии для работы с БД Postgres
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session() as session:
         yield session
