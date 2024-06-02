@@ -1,4 +1,5 @@
 import httpx
+from aiocircuitbreaker import circuit
 from fastapi import APIRouter, Depends, HTTPException
 from utils.jwt import oauth2_scheme, get_current_auth_user
 from schemas import MessageSchema, PtpChatSchema, UserReadSchema
@@ -13,6 +14,7 @@ router = APIRouter(
 
 
 @router.post('/send_message/{user_getter_id}', response_model=MessageSchema)
+@circuit(failure_threshold=5, recovery_timeout=30)
 async def send_message(message_text: str, user_getter_id: int, username: str = Depends(get_current_auth_user),
                        token: str = Depends(oauth2_scheme)):
 
@@ -63,6 +65,7 @@ async def send_message(message_text: str, user_getter_id: int, username: str = D
 
 
 @router.get('/get_messages', response_model=list[PtpChatSchema])
+@circuit(failure_threshold=5, recovery_timeout=30)
 async def get_messages(username: str = Depends(get_current_auth_user), token: str = Depends(oauth2_scheme)):
     
     # Все сообщения пользователя

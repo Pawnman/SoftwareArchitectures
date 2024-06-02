@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends
 from utils.handlers import handle_response
 from routers.user_router import oauth2_scheme
 from settings import settings
+from aiocircuitbreaker import circuit
 
 router = APIRouter(
     tags=["ptp"],
@@ -12,6 +13,7 @@ router = APIRouter(
 
 
 @router.post('/message/{user_id}')
+@circuit(failure_threshold=5, recovery_timeout=30)
 async def send_message(message_text: str, user_id: int,
                        token: str = Depends(oauth2_scheme)):
     async with httpx.AsyncClient() as client:
@@ -23,6 +25,7 @@ async def send_message(message_text: str, user_id: int,
 
 
 @router.get('/messages')
+@circuit(failure_threshold=5, recovery_timeout=30)
 async def get_messages(token: str = Depends(oauth2_scheme)):
 
     async with httpx.AsyncClient() as client:

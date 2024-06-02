@@ -7,7 +7,7 @@ from database.mongo_db import GroupChat
 from schemas import GroupChatSchema, MessageSchema, UserReadSchema
 from settings import settings
 from utils.utils import convert_group_model_to_dict
-
+from aiocircuitbreaker import circuit
 
 router = APIRouter(
     tags=["group_chat"],
@@ -16,6 +16,7 @@ router = APIRouter(
 
 
 @router.post("/create", response_model=GroupChatSchema)
+@circuit(failure_threshold=5, recovery_timeout=30)
 async def create_group(group_name: str, username: str = Depends(get_current_auth_user),
                        token: str = Depends(oauth2_scheme)):
 
@@ -38,6 +39,7 @@ async def create_group(group_name: str, username: str = Depends(get_current_auth
 
 
 @router.post("/add_member/{group_id}/{user_id}", response_model=GroupChatSchema)
+@circuit(failure_threshold=5, recovery_timeout=30)
 async def add_member_to_group(group_id: str, user_id: int, token: str = Depends(oauth2_scheme)):
 
     try:
@@ -67,6 +69,7 @@ async def add_member_to_group(group_id: str, user_id: int, token: str = Depends(
 
 
 @router.post('/send_message/{group_id}', response_model=MessageSchema)
+@circuit(failure_threshold=5, recovery_timeout=30)
 async def send_message(message_text: str, group_id: str, username: str = Depends(get_current_auth_user),
                        token: str = Depends(oauth2_scheme)):
 
@@ -93,6 +96,7 @@ async def send_message(message_text: str, group_id: str, username: str = Depends
 
 
 @router.get('/{group_id}', dependencies=[Depends(get_current_auth_user)], response_model=GroupChatSchema)
+@circuit(failure_threshold=5, recovery_timeout=30)
 async def get_group(group_id: str):
 
     try:

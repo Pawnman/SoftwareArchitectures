@@ -1,12 +1,12 @@
 from typing import AsyncIterator
 
-from redis import Redis, asyncio as aioredis
 from sqlalchemy import select, update, delete, inspect
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.postgres_db import async_session
 from models import User
 from settings import settings
+from redis import Redis, asyncio as aioredis
 
 
 async def init_redis_pool() -> AsyncIterator[Redis]:

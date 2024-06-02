@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str = "postgres"
     POSTGRES_HOST: str = "postgres"
     POSTGRES_PORT: int = 5432
-    POSTGRES_DB: str = "messenger_db"
+    POSTGRES_DB: str = "messenger"
     MONGO_HOST: str = "mongo"
     MONGO_INITDB_ROOT_USERNAME: str = "mongo"
     MONGO_INITDB_ROOT_PASSWORD: str = "mongo123"
@@ -19,6 +19,6 @@ class Settings(BaseSettings):
     REDIS_HOST: str = "redis"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
-
+    
 
 settings = Settings()
