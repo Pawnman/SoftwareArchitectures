@@ -1,10 +1,10 @@
 import httpx
+from aiocircuitbreaker import circuit
 from fastapi import APIRouter, Depends
 
 from utils.handlers import handle_response
 from routers.user_router import oauth2_scheme
 from settings import settings
-from aiocircuitbreaker import circuit
 
 router = APIRouter(
     tags=["ptp"],

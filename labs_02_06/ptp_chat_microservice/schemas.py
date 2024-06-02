@@ -11,15 +11,19 @@ class UserReadSchema(BaseModel):
     username: str
     is_active: bool | None = True
 
-# Модель сообщения
+
 class MessageSchema(BaseModel):
+    """ Модель сообщения """
     text: str
     user: UserReadSchema
     created_at: datetime.datetime = Field(default_factory=datetime.datetime.now)
 
 
-# Модель хранения PtP чата
 class PtpChatSchema(BaseModel):
+    """
+
+    Создаем схему для хранения PTP-чата
+    """
     model_config = ConfigDict(alias_generator=alias_generators.to_camel, from_attributes=True, populate_by_name=True)
 
     id: PydanticObjectId | None = Field(validation_alias='_id', default=None)
