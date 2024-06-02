@@ -1,0 +1,107 @@
+
+services:
+
+  user_microservice:
+    container_name: user_microservice_container
+    build: user_microservice
+
+    command: bash -c "alembic upgrade head && uvicorn app:app --reload --host 0.0.0.0 --port 8100"
+
+    depends_on:
+      - postgres
+      - redis
+      - api_gateway
+
+    ports:
+      - 8100:8100
+
+  group_chat_microservice:
+    container_name: group_chat_microservice_container
+    build: group_chat_microservice
+
+    command: bash -c "uvicorn app:app --reload --host 0.0.0.0 --port 8070"
+
+    depends_on:
+      - api_gateway
+
+    ports:
+      - 8070:8070
+
+  ptp_chat_microservice:
+    container_name: ptp_chat_microservice_container
+    build: ptp_chat_microservice
+
+    command: bash -c "uvicorn app:app --reload --host 0.0.0.0 --port 8090"
+
+    depends_on:
+      - api_gateway
+
+    ports:
+      - 8090:8090
+
+
+  mongo:
+    container_name: messenger_mongo
+    image: mongo
+
+    volumes:
+      - messenger_mongo_data:/data/mongo
+    ports:
+      - "27017:27017"
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo123
+
+    restart: always
+
+  postgres:
+    container_name: messenger_postgres
+    image: postgres
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: messenger
+
+    ports:
+      - "127.0.0.1:5433:5432"
+
+    volumes:
+      - messenger_postgres_data:/data
+
+    restart: always
+
+  redis:
+    container_name: messenger_redis
+
+    image: redis:7.2-alpine
+    volumes:
+      - messenger_redis_data:/data
+
+    restart: always
+
+  api_gateway:
+    container_name: api_gateway_container
+    build: api_gateway
+
+    command: bash -c "uvicorn app:app --reload --host 0.0.0.0 --port 8000"
+
+    ports:
+      - 8000:8000
+
+
+    restart: always
+
+  adminer:
+    container_name: adminer_container
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    ports:
+      - 8080:8080
+
+volumes:
+  messenger_mongo_data:
+  messenger_postgres_data:
+  messenger_redis_data:

@@ -1,0 +1,507 @@
+openapi: 3.1.0
+info:
+  title: MessengerAPI
+  version: 0.1.0
+paths:
+  /begin_data/:
+    post:
+      tags:
+        - begin_data
+      summary: Add Begin Data
+      operationId: add_begin_data_begin_data__post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /user/token:
+    post:
+      tags:
+        - user
+      summary: Login For Access Token
+      operationId: login_for_access_token_user_token_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_login_for_access_token_user_token_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user/refresh:
+    post:
+      tags:
+        - user
+      summary: Refresh Token
+      operationId: refresh_token_user_refresh_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+  /user/logout:
+    post:
+      tags:
+        - user
+      summary: Logout
+      operationId: logout_user_logout_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+  /user/register:
+    post:
+      tags:
+        - user
+      summary: Create New User
+      operationId: create_new_user_user_register_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateSchema'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user/me:
+    get:
+      tags:
+        - user
+      summary: Get Me
+      operationId: get_me_user_me_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+    delete:
+      tags:
+        - user
+      summary: Delete Me
+      operationId: delete_me_user_me_delete
+      responses:
+        '204':
+          description: Successful Response
+      security:
+        - OAuth2PasswordBearer: []
+    patch:
+      tags:
+        - user
+      summary: Update Me
+      operationId: update_me_user_me_patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateSchema'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  '/user/search/{mask}':
+    get:
+      tags:
+        - user
+      summary: Get User By Mask
+      operationId: get_user_by_mask_user_search__mask__get
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: mask
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Mask
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user/:
+    get:
+      tags:
+        - user
+      summary: Get User By Username
+      operationId: get_user_by_username_user__get
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Username
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  '/user/get/{user_id}':
+    get:
+      tags:
+        - user
+      summary: Search User
+      operationId: search_user_user_get__user_id__get
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /group/create:
+    post:
+      tags:
+        - group
+      summary: Create Group
+      operationId: create_group_group_create_post
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: group_name
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Group Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  '/group/new_member/{group_id}/{user_id}':
+    post:
+      tags:
+        - group
+      summary: Add Member To Group
+      operationId: add_member_to_group_group_new_member__group_id___user_id__post
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Group Id
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  '/group/message/{group_id}':
+    post:
+      tags:
+        - group
+      summary: Send Message
+      operationId: send_message_group_message__group_id__post
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Group Id
+        - name: message_text
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Message Text
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  '/group/{group_id}':
+    get:
+      tags:
+        - group
+      summary: Get Group
+      operationId: get_group_group__group_id__get
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Group Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  '/ptp/message/{user_id}':
+    post:
+      tags:
+        - ptp
+      summary: Send Message
+      operationId: send_message_ptp_message__user_id__post
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Id
+        - name: message_text
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Message Text
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /ptp/messages:
+    get:
+      tags:
+        - ptp
+      summary: Get Messages
+      operationId: get_messages_ptp_messages_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+components:
+  schemas:
+    Body_login_for_access_token_user_token_post:
+      properties:
+        grant_type:
+          anyOf:
+            - type: string
+              pattern: password
+            - type: 'null'
+          title: Grant Type
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          title: Password
+        scope:
+          type: string
+          title: Scope
+          default: ''
+        client_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Client Id
+        client_secret:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Client Secret
+      type: object
+      required:
+        - username
+        - password
+      title: Body_login_for_access_token_user_token_post
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UserCreateSchema:
+      properties:
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Name
+          default: ''
+        lastName:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Lastname
+          default: ''
+        password:
+          type: string
+          title: Password
+        username:
+          type: string
+          title: Username
+        isActive:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          title: Isactive
+          default: true
+      type: object
+      required:
+        - password
+        - username
+      title: UserCreateSchema
+    UserUpdateSchema:
+      properties:
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Name
+        lastName:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Lastname
+      type: object
+      title: UserUpdateSchema
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /user/token
