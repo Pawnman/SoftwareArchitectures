@@ -1,31 +1,7 @@
-# Программная инженерия (Software Architecture)
-
-Курсовой проект, представляющий из себя клиент-серверное приложение "Мессенджер" на основании 6-ти лабораторных работ.
-
-## Выполнил учащийся группы М80-109М-23:
-
-    Пешков Максим Юрьевич
-
-## Вариант 5 - Мессенджер
-
-Приложение должно содержать следующие данные:
-
-- Пользователь
-- Групповой чат
-- Person to Person (PtP) чат
-  
-Реализовать API:
-- Создание нового пользователя
-- Поиск пользователя по логину
-- Поиск пользователя по маске имя и фамилии
-- Создание группового чата
-- Добавление пользователя в чат
-- Добавление сообщения в групповой чат
-- Загрузка сообщений группового чата
-- Отправка PtP сообщения пользователю
-- Получение PtP списка сообщений для пользователя
-
 # Messenger Microservice Application
+## Created by student:
+
+    Peshkov Maksim
 
 ## Project Overview
 This project involves the development of a **microservice application** for a messaging platform that supports user accounts, group chats, and point-to-point (PtP) messaging. The system is designed with a robust **REST API** for operations such as user creation, user search by login or name, creation of group chats, adding users to chats, and sending/receiving messages. The application integrates both **PostgreSQL** and **MongoDB** databases to store data, and it includes JWT-based authentication and Redis-based caching to enhance performance.
@@ -132,19 +108,18 @@ The goal of this project is to provide a scalable and secure messaging platform 
   ```bash
   docker build -t messenger_service .
 
-
-# Архитектура приложения
+# Application Architecture
 
 <p></p>
 <figure>
    <img src="./lab_01/images/Context.png" width="400"/>
-   <figcaption>Рисунок 1 - Контекстная схема приложения</figcaption>
+   <figcaption>Figure 1 - Context Diagram of the Application</figcaption>
   </figure>
 <p></p>
 
 <p></p>
 <figure>
    <img src="./lab_01/images/Deployment.png" width="400"/>
-   <figcaption>Рисунок 2 - Структура развертки приложения</figcaption>
+   <figcaption>Figure 2 - Application Deployment Structure</figcaption>
   </figure>
 <p></p>
